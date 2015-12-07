@@ -2,10 +2,151 @@
   <header>
   <script src="https://raw.githubusercontent.com/processing-js/processing-js/v1.4.8/processing.js"></script>
   </header>
-  <h1>Your Sketch Title</h1>
+  <h1>Sketch #3</h1>
   <script type="text/processing" data-processing-target="mycanvas1">
   
-  
+    //varibles
+  float r;
+  float g;
+  float b;
+  float a;
+void setup(){
+  size(1280,800);
+  //background
+  background(255);
+}
+void mousePressed(){
+  background(r,g,b,a);
+}
+void draw(){
+  //bacground changes randomly
+  r = random(255);
+  g = random(255);
+  b = random(255);
+  a = random(255);
+  //minion head/body
+  strokeWeight(1);
+  fill(#F5CB31);
+  rect(500,350,300,600);
+   arc(650,352,300,260,PI,TWO_PI);
+   //minion hair
+   strokeWeight(3);
+   line(585,135,635,223);
+   line(635,100,635,224);
+   line(680,135,635,224);
+   //minion google straps
+   fill(140);
+   triangle(500,390,500,450,550,420);
+   triangle(800,390,800,450,750,420);
+   //minion eyes
+   strokeWeight(2);
+   fill(140);
+   ellipseMode(CENTER);
+   ellipse(595,420,110,110);
+   ellipse(705,420,110,110);
+   fill(255);
+   ellipse(595,420,70,70);
+   ellipse(705,420,70,70);
+   fill(0);
+   arc(595,420,40,40,HALF_PI,3*PI);
+   arc(705,420,40,40,HALF_PI,3*PI);
+   //spots on googles
+   strokeWeight(4);
+   point(555,400);
+   point(575,377);
+   point(610,377);
+   point(635,400);
+   point(630,450);
+   point(600,465);
+   point(570,455);
+   point(550,430);
+   point(640,425);
+   point(660,420);
+   point(670,390);
+   point(695,375);
+   point(725,380);
+   point(745,400);
+   point(748,430);
+   point(730,455);
+   point(705,465);
+   point(680,455);
+   //minion arm
+   strokeWeight(1);
+   fill(#F5CB31);
+   rect(350,700,40,150);
+   fill(0);
+   beginShape();
+     vertex(350,700);
+   vertex(310,670);
+   vertex(320,650);
+   vertex(360,680);
+   vertex(360,640);
+   vertex(380,640);
+   vertex(380,680);
+   vertex(410,650);
+   vertex(430,660);
+   vertex(390,700);
+   endShape();
+   //minion mouth
+   strokeWeight(3);
+   noFill();
+   stroke(0);
+   beginShape();
+   curveVertex(620,610);
+   curveVertex(620,610);
+   curveVertex(700,590);
+   curveVertex(720,540);
+   curveVertex(720,540);
+   endShape();
+   //moveable shapes confetti
+   strokeWeight(1);
+   fill(r,g,b,a);
+   beginShape();
+   vertex(mouseX,mouseY);
+   vertex(mouseX-30,mouseY-30);
+   vertex(mouseX-10,mouseY-40);
+   vertex(mouseX+30,mouseY-40);
+   vertex(mouseX+50,mouseY-30);
+   vertex(mouseX,mouseY);
+   endShape();
+   fill(r,g,b,a);
+   beginShape();
+   vertex(mouseX,mouseY);
+   vertex(mouseX-20,mouseY-20);
+   vertex(mouseX-0,mouseY-30);
+   vertex(mouseX+20,mouseY-30);
+   vertex(mouseX+40,mouseY-20);
+   vertex(mouseX,mouseY);
+   endShape();
+   beginShape();
+   vertex(mouseX,mouseY);
+   vertex(mouseX-10,mouseY-10);
+   vertex(mouseX+10,mouseY-20);
+   vertex(mouseX+10,mouseY-20);
+   vertex(mouseX+30,mouseY-10);
+   vertex(mouseX,mouseY);
+   endShape();
+   //suspenders
+   fill(#145BA5);
+   beginShape();
+   vertex(500,650);
+   vertex(600,800);
+   vertex(550,800);
+   vertex(500,700);
+   vertex(500,650);
+   endShape();
+   beginShape();
+   vertex(800,650);
+   vertex(700,800);
+   vertex(750,800);
+   vertex(800,700);
+   vertex(800,650);
+   endShape();
+}
+void keyPressed(){
+  //any key turns it back to white
+  background(255);
+}
   <!-- Your sketch goes here -->
 
   </script>
