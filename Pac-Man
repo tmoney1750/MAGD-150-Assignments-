@@ -1,0 +1,286 @@
+int pressedState = 0;
+int pressed = 0;
+
+Timer myTimer;
+
+void setup(){
+size(800,600);
+newMovement = new Movement();
+myTimer = new Timer(3000);
+myPacMan = new PacMan();
+}
+
+void draw(){
+ if (myTimer.isFinished()){
+   //second screen
+   background(255);
+   drawCabinet();
+   newMovement.update();
+  newMovement.display();
+}
+else{
+  //first screen
+  background(#006A93);
+  myPacMan.displayState0();
+  textSize(40);
+  text("Time to play Pac Man",210,80);
+  fill(#FFDA03);
+  arc(90,500, 60,60,.4,TWO_PI-.4,PIE);
+  fill(255);
+  ellipse(160,500,25,25);
+  ellipse(210,500,25,25);
+  ellipse(260,500,25,25);
+  ellipse(310,500,25,25);
+  ellipse(360,500,25,25);
+  ellipse(410,500,25,25);
+  ellipse(460,500,25,25);
+  ellipse(510,500,25,25);
+  ellipse(560,500,25,25);
+  ellipse(610,500,25,25);
+  ellipse(660,500,25,25);
+  textSize(30);
+  text("LOADING",310,550);
+}
+}
+
+void mousePressed(){
+ pressed = pressed + 1;
+// if want 3 states change the 2 to 3
+  pressedState = (pressed % 2);
+}
+
+void drawCabinet(){
+  //base
+  fill(0);
+  rect(190,330,400,260);
+  //control pad area
+  fill(50);
+  beginShape();
+  vertex(190,330);
+  vertex(215,270);
+  vertex(555,270);
+  vertex(590,330);
+  endShape();
+  //buttons
+  fill(255,0,0);
+  ellipse(260,300,22,22);
+  ellipse(260,300,16,16);
+  ellipse(310,290,22,22);
+  ellipse(310,290,16,16);
+  //Background of Screen
+  fill(#FFB003);
+  rect(215,110,340,160);
+  //Screen
+  fill(0);
+  rect(260,130,240,120,10);
+  //joy stick
+  fill(255,0,0);
+  ellipse(450,300,22,22);
+  fill(100);
+  rect(445,270,10,30,10);
+  fill(255,0,0);
+  ellipse(450,270,22,22);
+  //piece that connects to top piece
+  fill(50);
+  beginShape();
+  vertex(215,110);
+  vertex(555,110);
+  vertex(580,80);
+  vertex(190,80);
+  endShape();
+  //top piece
+  fill(#F6FF00);
+  rect(190,5,390,75);
+  //decoration for top piece
+  noFill();
+  rect(370,35,60,30);
+  fill(#1E99F5);
+  beginShape();
+  vertex(340,60);
+  vertex(380,60);
+  vertex(400,30);
+  vertex(360,30);
+  endShape();
+  fill(#F000B8);
+  beginShape();
+  vertex(370,50);
+  vertex(410,50);
+  vertex(430,20);
+  vertex(390,20);
+  endShape();
+  //"PAC MAN"
+  fill(0);
+  textSize(60);
+  text("PAC",215,60);
+  text("MAN",440,60);
+  //coin slot
+  fill(100);
+  rect(330,400,60,50);
+  fill(0);
+  rect(340,410,5,30);
+  fill(#FF6803);
+  rect(350,410,30,30);
+  fill(0);
+  textSize(15);
+  text("25¢",352,430);
+}
+
+class Movement{
+  int centerX, centerY, offset1, offset2, offsetX1, offsetX2, r1, r2, r3;
+  boolean keys[];    // In this array, the index corresponds with W,S,A,D.
+  
+  int xVelocity, yVelocity;
+  
+  // constructor
+  Movement(){
+    centerX = (280);
+    centerY = (200);
+    offset1 = -20;
+    offset2 = +20;
+    offsetX1 = -20;
+    offsetX2 = + 20;
+    r1 = 40;
+    r2 = 20;
+    r3 = 15;
+    keys = new boolean [4];
+  }
+  //PAC MAN
+  void display(){ 
+    fill(#FFDA03);
+    arc(centerX , centerY, 20,20,.4,TWO_PI-.4,PIE); // pac man
+  }
+  
+  void update(){
+    if (keys[0]){
+      yVelocity = -5;
+    }
+   if(keys[1]){
+      yVelocity = 5;
+    }
+    if(keys[2]){
+      xVelocity = -5;
+    }
+    if(keys[3]){
+      xVelocity = 5;
+    }
+    if(!keys[2] && !keys[3]){
+      xVelocity = 0;
+      //println("no left or right");
+    }
+    if(!keys[0] && !keys[1]){ 
+      yVelocity = 0;
+      //println("no left or right");
+    }
+    centerX += xVelocity;
+    centerY += yVelocity;
+    println(centerX);
+    
+    // set bounds for pacman
+    if(centerX <= 270){
+      centerX = 270;
+    }
+    if(centerX >=490){
+      centerX = 490;
+    }
+    if(centerY <= 140){
+      centerY = 140;
+    }
+    if(centerY >=240){
+      centerY = 240;
+    }
+  }
+  
+  void keyPressed(){
+    if(key == 'w'){
+      keys[0] = true;
+    } 
+    if(key == 's'){
+      keys[1] = true;
+    }
+    if(key == 'a'){
+      keys[2] = true;
+    }
+    if(key == 'd'){
+      keys[3] = true;
+    } 
+  }
+  
+  void keyReleased(){ // the 
+    println("Keyreleased " + key);
+    if(key == 'w'){
+      keys[0] = false;
+    } 
+    if(key == 's'){
+      keys[1] = false;
+    }
+    if(key == 'a'){
+      keys[2] = false;
+    }
+    if(key == 'd'){
+      keys[3] = false;
+    } 
+  }   
+}
+
+Movement newMovement;
+
+
+void keyPressed(){
+  newMovement.keyPressed();  
+}
+
+void keyReleased(){
+newMovement.keyReleased();
+}
+
+//Tab Pac Man Logo
+
+PacMan myPacMan;
+
+class PacMan {
+  PImage PacMan;
+  
+PacMan(){
+  PacMan = loadImage("PacMan_Logo.png");
+}
+
+void displayState0(){
+  image(PacMan,230,200);
+}
+
+void setup(){
+ size(800,600);
+ myPacMan = new PacMan();
+}
+
+void draw(){
+  myPacMan.displayState0();
+}
+}
+
+//Tab Timer
+
+class Timer{
+  int savedTime;  // When Timer started
+  int totalTime;  // How long Timer should last
+  
+  // The constructor, set how long the Timer last with integer value
+  Timer(int _totalTime){
+    totalTime = _totalTime;
+  }
+  
+  // Start the Timer
+  void start() {
+    savedTime = millis();
+  }
+  
+  boolean isFinished() {
+   // check how much time has passed
+   int passedTime = millis() - savedTime;
+   if (passedTime > totalTime) {
+     return true;
+   } else {
+     return false;
+   }
+  }
+}
