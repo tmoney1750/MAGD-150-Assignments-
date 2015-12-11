@@ -1,0 +1,76 @@
+int posX = 50;
+int movementSize = 1;
+int ballDiameter = 100;
+
+boolean mPressedState = false;
+
+void setup(){
+  size(800,600);
+}
+void draw(){
+  background(#0E2B71);
+  //moon and crators
+  fill(155);
+ ellipse(posX,100,ballDiameter,100);
+ fill(50);
+ ellipse(posX-20,75,ballDiameter-88,10);
+ ellipse(posX+30,80,ballDiameter-88,10);
+ ellipse(posX-33,105,ballDiameter-88,10);
+ ellipse(posX+35,125,ballDiameter-88,10);
+  ellipse(posX-5,135,ballDiameter-88,10);
+  ellipse(posX+5,105,ballDiameter-88,10);
+ update();
+ //grass
+ fill(#3D7E09);
+ rect(0,500,800,100);
+ //pumpkin
+ for(int x=1; x < 6; x++){
+ fill(#FA8F03);
+ ellipse(400,400, (x+12 * 20), (x+14 * 20));
+ //pumpkin stem
+ fill(#DEA948);
+ beginShape();
+ vertex(375,260);
+ vertex(425,260);
+ vertex(415,240);
+ vertex(385,240);
+ vertex(375,260);
+ endShape();
+ //pumpkin eyes and nose
+ fill(0);
+ rect(330,320,40,20);
+ rect(420,320,40,20);
+ arc(350,340,40,20,0,PI);
+ arc(440,340,40,20,0,PI);
+ triangle(375,380,425,380,400,360);
+ //mouth and teeth
+ arc(395,420,150,100,0,PI);
+ noStroke();
+ fill(#FA8F03);
+ rect(420,419,20,20);
+ rect(350,419,20,20);
+ }
+ showGreeting();
+ 
+}
+
+void update(){
+  if((posX + (ballDiameter/2)) > width){
+   movementSize = movementSize * -1;
+  } else if (posX < ballDiameter/2){
+    movementSize = movementSize * -1;
+  }
+ posX = posX + movementSize;
+}
+
+void mousePressed()
+{
+  mPressedState = !mPressedState;
+}
+
+void showGreeting(){
+  if(mPressedState){
+    textSize(34);
+    text("Happy Halloween!",mouseX,mouseY);
+  }
+}
