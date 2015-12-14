@@ -233,8 +233,6 @@ void keyReleased(){
 newMovement.keyReleased();
 }
 
-//Tab Pac Man Logo
-
 PacMan myPacMan;
 
 class PacMan {
@@ -257,8 +255,6 @@ void draw(){
   myPacMan.displayState0();
 }
 }
-
-//Tab Timer
 
 class Timer{
   int savedTime;  // When Timer started
