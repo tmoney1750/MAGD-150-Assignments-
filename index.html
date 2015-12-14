@@ -409,10 +409,171 @@ void update(){
   <p>Description: Press mouse for change of scene</p>
         <br />
         <br />
-  <h1>Your Sketch4 Title</h1>
+  <h1>Thanksgiving Sketch</h1>
   <script type="text/processing" data-processing-target="mycanvas4">
   
-  <!-- Your sketch4 goes here -->
+  int pressedState = 0;
+int pressed = 0;
+int turkeyCount = 0;
+
+Timer myTimer;
+drawTurkey [] turkeyArray;
+
+void setup(){
+  size(1000,600);
+  myTimer = new Timer(3000);
+  myThanksgivingBackground = new ThanksgivingBackground();
+  myThanksgivingTurkey = new ThanksgivingTurkey();
+  turkeyArray = new drawTurkey [30];
+  for (int arrayMember = 0; arrayMember < turkeyArray.length; arrayMember++){
+    turkeyArray[arrayMember] = new drawTurkey();
+  }
+}
+
+void draw(){
+  
+  if (myTimer.isFinished()){
+     frameRate(2);                 
+     background(255);
+     
+     for(int _tempTurkeyCount = 0; _tempTurkeyCount < turkeyCount; _tempTurkeyCount++){
+         turkeyArray[_tempTurkeyCount].display();      
+     }
+     
+     fill(255,0,0);
+     textSize(100);
+     text(turkeyCount, 100, 100);
+     
+     turkeyCount++;
+     
+     if (turkeyCount > turkeyArray.length){
+       noLoop();
+     }
+     
+  }
+  else{
+    //first screen
+    background(#006A93);
+    myThanksgivingBackground.displayState0();
+    myThanksgivingTurkey.displayState0();
+  }
+}
+
+//Background tab
+
+ThanksgivingBackground myThanksgivingBackground;
+
+class ThanksgivingBackground {
+  PImage ThanksgivingBackground;
+  
+ThanksgivingBackground(){
+ ThanksgivingBackground = loadImage("Happy_Thanksgiving_Background.jpg");
+ image(ThanksgivingBackground, 0, 0);
+ThanksgivingBackground.resize(1000,600);
+}
+
+void displayState0(){
+  image(ThanksgivingBackground,0,0);
+}
+}
+
+//timer tab
+
+class Timer{
+  float startTime, stopTime; 
+   boolean started = true; 
+  
+  Timer(float _stopTime){
+    stopTime = _stopTime;
+  }
+  
+  void timerStart(){
+    startTime = millis();
+    started = true;
+  }
+  
+  void stopTimer(){
+    started = false;
+    println("time stopped");
+  }
+  
+
+  boolean isFinished(){
+    float passedTime = millis() - startTime;
+    if((passedTime > stopTime) && (started)) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+}
+
+//Turkey class timer
+
+class drawTurkey{
+   int centerX, centerY;
+  drawTurkey(){
+    centerX = round(random(width));
+    centerY = round(random(height));
+  } 
+   
+  void display(){ 
+   //FEATHERS
+   fill(#F5770F);
+   arc(centerX,centerY,60,320,PI,TWO_PI);
+   fill(#D32206);
+   arc(centerX-30,centerY,60,320,PI,TWO_PI);
+   fill(#FAB505);
+   arc(centerX+30,centerY,60,320,PI,TWO_PI);
+   fill(#F5770F);
+   arc(centerX+60,centerY,60,320,PI,TWO_PI);
+   arc(centerX-60,centerY,60,320,PI,TWO_PI);
+   //Body and Head
+   ellipseMode(CENTER);
+   fill(#B47309);
+   ellipse(centerX,centerY,200,200);
+   ellipse(centerX,centerY-75,100,100);
+   //eyes
+   fill(255);
+   ellipse(centerX-20,centerY-85,25,25);
+   ellipse(centerX+20,centerY-85,25,25);
+   fill(0);
+   ellipse(centerX-20,centerY-85,10,10);
+   ellipse(centerX+20,centerY-85,10,10);
+   //Beak
+   fill(#FFCD00);
+   triangle(centerX-15,centerY-70,centerX+15,centerY-70,centerX,centerY-45);
+   fill(0);
+   ellipse(centerX-3,centerY-60,3,6);
+   ellipse(centerX+3,centerY-60,3,6);
+  }
+ }
+ 
+ //Turkey picutre tab
+ 
+ ThanksgivingTurkey myThanksgivingTurkey;
+
+class ThanksgivingTurkey {
+  PImage ThanksgivingTurkey;
+  
+ThanksgivingTurkey(){
+ ThanksgivingTurkey = loadImage("thanksgiving-turkey.png");
+ image(ThanksgivingTurkey, 300, 300);
+ThanksgivingTurkey.resize(200,200);
+}
+
+void displayState0(){
+  image(ThanksgivingTurkey,530,250);
+}
+
+void setup(){
+ myThanksgivingTurkey = new ThanksgivingTurkey();
+}
+
+void draw(){
+  myThanksgivingTurkey.displayState0();
+}
+}
 
   </script>
   <canvas id="mycanvas4"></canvas>
