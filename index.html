@@ -5,14 +5,206 @@
   <h1>Your FINAL SKETCH Title</h1>
   <script type="text/processing" data-processing-target="mycanvas-final">
   
-  void setup(){
-    size(800,600); 
-    rect(200, 200, 300, 300);
-    }
+  int pressedState = 0;
+int pressed = 0;
+boolean kPressedState = false;
+
+Timer myTimer;
+Timer myTimer2;
+VaultBoyHead myVaultBoyHead;
+drawBobblehead mydrawBobblehead;
+FalloutBackground myFalloutBackground;
+dogmeat mydogmeat;
+
+void setup(){
+ size(1000,600);
+ myTimer = new Timer(2000);
+ myTimer2 = new Timer(4000);
+ myVaultBoyHead = new VaultBoyHead();
+ mydrawBobblehead = new drawBobblehead();
+ myFalloutBackground = new FalloutBackground();
+ mydogmeat = new dogmeat();
+}
+
+void draw(){
+if(pressedState == 0){
+  //first screen background and opening
+  myFalloutBackground.displayState1();
+  fill(0);
+  textSize(30);
+  text("FALLOUT 4",425,100);
+}
+// this is the second state
+if (pressedState == 1){
+   //second screen will have bobble head
+   background(#F0960F);
+   //instuctions
+   fill(0);
+    textSize(15);
+    text("Press key for head to appear",30,500);
+    text("Place head on top of body for message",30,530);
+    //collision
+   if((Math.abs(mouseX-mydrawBobblehead.centerX) < 50) && (Math.abs(mouseY-mydrawBobblehead.centerY) < 60)){
+     fill(#B90EC6);
+     textSize(30);
+    text("MAGD bobblehead! Give plus 5 to all assignments!",150,100);
+   }
+   mydrawBobblehead.display();
+   
+}
+if(pressedState == 2){
+  //third screen will have dogmeat
+  background(0);
+  if(myTimer.isFinished()){
+   mydogmeat.displayState2();
+   fill(255);
+ textSize(28);
+ text("And always treat him well!",325,140);
+ }
+ if(myTimer2.isFinished()){
+   PImage [] dog_treat; 
+   dog_treat= new PImage[3];
+   for(int x = 0; x < dog_treat.length; x++){
+    dog_treat[x]=  loadImage("dog_treat.png");
+   }
+ 
+  for(int x = 0; dog_treat.length > x; x++){
+   float randX = random(0,width);
+   float randY = random(0,height);
+   image(dog_treat[x], randX,randY, 150,100);
+  }
+ }
+ fill(255);
+ textSize(28);
+ text("Always remember to bring your best friend with you in the wasteland!",20,100);
+}
+ if(kPressedState){
+  myVaultBoyHead.displayState0();
+  }
+
+}
+
+void mousePressed(){
+ pressed = pressed + 1;
+// if want 3 states change the 2 to 3
+  pressedState = (pressed % 3);
+    myTimer.start();
+    myTimer2.start();
+}
+
+void keyPressed()
+{
+  kPressedState = !kPressedState;
+}
+
+//Bobblehead body tab
+
+class drawBobblehead{
   
+   int centerX, centerY;
+   
+  drawBobblehead()
+  {
+    centerX = 500;
+    centerY = 290;
+    
+  }
   
+  void display(){
+    fill(#1C80D6);
+  rect(400,370,30,320,7);
+  rect(571,370,30,320,7);
+  rect(425,370,150,330);
+  arc(500,372,150,100,PI,TWO_PI);
+  fill(#FFEA2C);
+  rect(490,345,20,360);
+  rect(425,583,150,20);
+  fill(#F0960F);
+  arc(500,321,75,55,PI*.01,PI);
   
-  <!-- Your FINAL SKETCH goes here -->
+  }
+}
+
+//Fallout Background
+
+class FalloutBackground {
+  PImage FalloutBackground;
+  
+FalloutBackground(){
+ FalloutBackground = loadImage("Fallout_Background.jpg");
+ image(FalloutBackground, 0, 0);
+FalloutBackground.resize(1000,600);
+}
+
+void displayState1(){
+  image(FalloutBackground,0,0);
+}
+}
+
+//Timer tab
+
+class Timer{
+  int savedTime;  // When Timer started
+  int totalTime;  // How long Timer should last
+  boolean started = false;
+  
+  // The constructor, set how long the Timer last with integer value
+  Timer(int _totalTime){
+    totalTime = _totalTime;
+  }
+  
+  // Start the Timer
+  void start() {
+      savedTime = millis();
+      started = true;
+  }
+  
+  boolean isFinished() {
+   // check how much time has passed
+   int passedTime = millis() - savedTime;
+   if (passedTime > totalTime) {
+     return true;
+   } else {
+     return false;
+   }
+  }
+}
+
+//Vault Boy head tab
+
+class VaultBoyHead{
+ PImage VaultBoyHead;
+ 
+ VaultBoyHead(){
+   VaultBoyHead = loadImage("vault_boy_head.png");
+}
+
+void displayState0(){
+ image(VaultBoyHead,mouseX-50,mouseY-80); 
+}
+
+void setup(){
+ myVaultBoyHead = new VaultBoyHead(); 
+}
+
+void draw(){
+  myVaultBoyHead.displayState0();
+}
+}
+
+//Dogmeat tab
+
+class dogmeat{
+ PImage dogmeat;
+ 
+ dogmeat(){
+   dogmeat = loadImage("Dogmeat-edit.png");
+}
+
+void displayState2(){
+ image(dogmeat,375,240); 
+}
+}
 
   </script>
   <canvas id="mycanvas-final"></canvas>
